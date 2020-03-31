@@ -44,12 +44,13 @@ exports.user_login = function (req, res) {
    User.find({token:token[1]}, (err, data) => {
        console.log(data);
        if(data.length) {
-           console.log("good");
+           console.log(`${data[0].login}`);
+           res.json({
+            "msg": `Вы вошли как ${data[0].login}`
+        })
        } else {
            console.log("bad");
-           res({
-               msg: `Вы вошли как ${data[0].login}`
-           })
+
        }
    }) 
    

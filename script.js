@@ -2,11 +2,35 @@ let getToken = document.querySelector("#getToken");
 let login = document.querySelector("#enter");
 let showRegisterForm = document.querySelector("#showRegisterForm");
 let showLoginForm = document.querySelector("#showLoginForm");
+let loginInput = document.querySelector("#login")
+let passwordInput = document.querySelector("#password") 
+
+loginInput.addEventListener('input', (event)=> {
+    getToken.setAttribute('disabled', 'true')  
+    if(loginInput.value !== '' && passwordInput.value != '') {
+        console.log("enabled");
+        getToken.removeAttribute('disabled') 
+    } else{  
+        console.log("disabled");        
+    }
+})
+
+passwordInput.addEventListener('input', (event)=> {
+    getToken.setAttribute('disabled', 'true')   
+    if(loginInput.value !== '' && passwordInput.value != '') {
+        console.log(loginInput.value);
+        getToken.removeAttribute('disabled') 
+    } else{        
+        console.log("disabled");        
+    }
+})
+
 
 getToken.addEventListener("click", () => {
   event.preventDefault();
   let login = document.querySelector("#login").value;
   let password = document.querySelector("#password").value;
+
   if (login == '' && password == '') {
     getToken.setAttribute('disabled', 'true')
     alert("Пароль или логин должен быть пустым")

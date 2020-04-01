@@ -6,7 +6,7 @@ const cors = require('cors');
 
 const app = express();
 
-mongoose.connect('mongodb+srv://pbl6asoad:1q2w3e4r@cluster0-6bzz4.mongodb.net/registration', {
+mongoose.connect('mongodb://localhost:27017/users', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })

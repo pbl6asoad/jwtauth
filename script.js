@@ -4,6 +4,8 @@ let showRegisterForm = document.querySelector("#showRegisterForm");
 let showLoginForm = document.querySelector("#showLoginForm");
 let loginInput = document.querySelector("#login")
 let passwordInput = document.querySelector("#password") 
+let loginLogin = document.querySelector("#loginLogin")
+let passwordLogin = document.querySelector("#passwordLogin") 
 
 loginInput.addEventListener('input', (event)=> {
     getToken.setAttribute('disabled', 'true')  
@@ -58,7 +60,30 @@ getToken.addEventListener("click", () => {
   }
 });
 
-login.addEventListener("click", event => {});
+login.addEventListener("click", event => {
+  event.preventDefault()
+  fetch("http://localhost:5000/users/loging", {
+    method: "GET",
+    headers: {
+      login: `${loginLogin.value}`,
+      password: `${passwordLogin.value}`
+    }
+  })
+  .then(res => res.json())
+  .then(res => {
+
+    if (res["isPassed"] == "true") {
+        alert(`${res["msg"]}`)
+        registerForm.style.display = "none"
+        loginForm.style.display = "none"
+        localStorage.setItem("token", res["token"]);
+    } else{
+      alert('Авторизация не прошла, пожалуйста введите логин и пароль')
+      registerForm.style.display = "none"
+      loginForm.style.display = "block"
+    }
+  });
+});
 
 showRegisterForm.addEventListener("click", event => {
   event.preventDefault();
@@ -79,10 +104,20 @@ showLoginForm.addEventListener("click", event => {
     })
       .then(res => res.json())
       .then(res => {
-        alert(res["msg"]);
-        console.log(res);
+
+        if (res["isPassed"] == "true") {
+            alert(`${res["msg"]}`)
+            registerForm.style.display = "none"
+            loginForm.style.display = "none"
+        } else{
+          alert('Авторизация не прошла, пожалуйста введите логин и пароль')
+          registerForm.style.display = "none"
+          loginForm.style.display = "block"
+        }
       });
   } else {
     alert("Для начала зарегистрируйтесь");
   }
 });
+
+
